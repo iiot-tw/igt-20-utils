@@ -1,0 +1,9 @@
+echo gpio > /sys/class/leds/igt20::usr2/trigger
+echo gpio > /sys/class/leds/igt20::usr3/trigger
+echo gpio > /sys/class/leds/igt20::usr4/trigger
+echo gpio > /sys/class/leds/igt20::usr5/trigger
+
+echo 26 > /sys/class/leds/igt20::usr2/gpio
+echo 27 > /sys/class/leds/igt20::usr2/gpio
+echo 23 > /sys/class/leds/igt20::usr2/gpio
+echo 61 > /sys/class/leds/igt20::usr2/gpio
