@@ -85,16 +85,17 @@ int main(void)
         if (rc > 0) {
 			/* rc is the query size */
 		   
-			IGT_DI_ReadLine(0,&val);
-			mb_mapping->tab_input_bits[0]=val;
-			IGT_DI_ReadLine(1,&val);
-			mb_mapping->tab_input_bits[1]=val;
-			IGT_DI_ReadLine(2,&val);
-			mb_mapping->tab_input_bits[2]=val;
-			IGT_DI_ReadLine(3,&val);
+	    	IGT_DI_ReadLine(0,&val);
+	    	mb_mapping->tab_input_bits[0]=val;
+	    	IGT_DI_ReadLine(1,&val);
+	    	mb_mapping->tab_input_bits[1]=val;
+	    	IGT_DI_ReadLine(2,&val);
+	    	mb_mapping->tab_input_bits[2]=val;
+	    	IGT_DI_ReadLine(3,&val);
 			mb_mapping->tab_input_bits[3]=val;
 
             modbus_reply(ctx, query, rc, mb_mapping);
+	    	//reading mb_mapping->tab_bits[x] here will get the output value from the master
         } else if (rc == -1) {
             /* Connection closed by the client or error */
             break;
