@@ -63,8 +63,8 @@ if [ -f /neousys/firstboot ] ; then
 	fi
 fi
 
-if [ -f "/resizerootfs" ]; then
-	drive=$(cat /resizerootfs)
+if [ -f "/neousys/resizerootfs" ]; then
+	drive=$(cat /neousys/resizerootfs)
 	if [ ! "x${drive}" = "x" ] ; then
 	        if [ "x${drive}" = "x/dev/mmcblk0" ] || [ "x${drive}" = "x/dev/mmcblk1" ] ; then
 	                resize2fs ${drive}p2 >/var/log/resize.log 2>&1 || true
@@ -72,7 +72,7 @@ if [ -f "/resizerootfs" ]; then
 	                resize2fs ${drive} >/var/log/resize.log 2>&1 || true
 	        fi
 	fi
-	rm -rf /resizerootfs || true
+	rm -rf /neousys/resizerootfs || true
 	sync
 fi
 
