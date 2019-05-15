@@ -29,7 +29,7 @@ fi
 
 echo "Media: [${drive}]"
 
-echo "${drive}p1" > /resizerootfs
+echo "${drive}p1" > /neousys/resizerootfs
 conf_boot_startmb=${conf_boot_startmb:-"4"}
 sfdisk_fstype=${sfdisk_fstype:-"L"}
 if [ "x${sfdisk_fstype}" = "x0x83" ] ; then
