@@ -61,6 +61,7 @@ if [ -f /neousys/firstboot ] ; then
 	else
 		echo "generic-board-startup (Neousys): No MAC or no connman found"
 	fi
+##to do IGT-30 has different Ethernet configuration. This script will now overwrite the exisiting one on IGT-30
 fi
 
 if [ -f "/neousys/resizerootfs" ]; then
@@ -81,8 +82,11 @@ if [ -f /proc/device-tree/model ] ; then
 	echo "generic-board-startup: [model=${board}]"
 
 	case "${board}" in
-	Neousys_IGT-2[01])
+	Neousys_IGT-2[012])
 		script="igt20-startup.sh"
+		;;
+	Neousys_IGT-3[01])
+		script="igt30-startup.sh"
 		;;
 	*)
 		script="generic.sh"
