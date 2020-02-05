@@ -1,3 +1,8 @@
+def dog_feed():
+    f = open("/dev/watchdog", "w")
+    f.write("0")
+    f.close()
+
 def led(i, v):
     if i<0 or i>5:
         return -1
@@ -80,3 +85,18 @@ for idx in range(0,4):
 do_write(do_idx,0)
 
 do_enable(0)
+
+# watchdog sample
+tick=0
+# start watchdog
+dog_feed()
+
+while 1:
+  time.sleep(1)
+  tick=tick+1
+  print(tick)
+
+  if tick>=50:
+#feed the dog if 50sec passes
+    dog_feed()
+    tick=0
