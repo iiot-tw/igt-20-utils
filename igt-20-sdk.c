@@ -153,9 +153,9 @@ void main(void)
 	do_enable(0);
 	
 	for(idx=0;idx<6;idx++)
-		led(1);
+		led(idx, 1);
 
 	sleep(3);
 	for(idx=0;idx<6;idx++)
-		led(0);
+		led(idx, 0);
 }
