@@ -130,9 +130,14 @@ int led(unsigned int line, unsigned int value)
 void main(void)
 {
 	int do_idx=3;
-
+	int btn0, btn1;
+	
+	btn_read(0, &btn0);
+	btn_read(1, &btn1);
+	
+	printf("BTN0:%d\nBTN1:%d\n", btn0, btn1);
+	
 	do_enable(1);
-
 	do_write(do_idx,1);
 
 //just make sure my relay have enough time to contact
@@ -146,4 +151,11 @@ void main(void)
 	
 	do_write(do_idx,0);
 	do_enable(0);
+	
+	for(idx=0;idx<6;idx++)
+		led(1);
+
+	sleep(3);
+	for(idx=0;idx<6;idx++)
+		led(0);
 }
