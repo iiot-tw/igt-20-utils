@@ -12,6 +12,8 @@
 const unsigned int g_iBtnGpioPin[MAX_BTN_NUM]={72,73}; /*IGT-30*/
 #elif defined IGT_20
 const unsigned int g_iBtnGpioPin[MAX_BTN_NUM]={68,67}; /*IGT-20*/
+#elif defined IGT_22
+const unsigned int g_iBtnGpioPin[MAX_BTN_NUM]={4,5}; /*IGT-22*/
 #else
 #error "model not defined"
 #endif
