@@ -38,3 +38,15 @@ class IGT30(IGT):
 
   def __init__(self):
     super().__init__(self.__led_fs, self.__btn_gpio)
+
+if __name__== '__main__':
+  import time
+
+  a=IGT30()
+
+  while True:
+    a.led(4,1)
+    time.sleep(1)
+    a.led(4,0)
+    time.sleep(1)
+    print (a.btn_read(0))
