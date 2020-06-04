@@ -19,7 +19,7 @@ class IGT():
     f.close()
     return ret
 
-  def led(self, i, v):
+  def led_write(self, i, v):
     if i<0 or i>5:
         return -1
 
@@ -31,6 +31,15 @@ class IGT():
       f = open(self.__led_fs+str(i)+"/brightness", "w")
       f.write("1")
       f.close()
+
+  def led_read(self, i):
+    if i<0 or i>5:
+        return -1
+
+    f = open(self.__led_fs+str(i)+"/brightness", "r")
+    ret=int(f.read())
+    f.close()
+    return ret
 
 class IGT30(IGT):
   __led_fs = "/sys/class/leds/igt30::usr"
