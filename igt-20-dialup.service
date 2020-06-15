@@ -1,0 +1,14 @@
+[Unit]
+Description=wvdial auto dial service
+Wants=network.target
+[Service]
+Type=simple
+# Run as root user
+User=root
+Group=root
+Nice=5
+ExecStart=/neousys/igt-20-dialer.sh /dev/ttyACM0
+KillSignal=SIGINT
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
