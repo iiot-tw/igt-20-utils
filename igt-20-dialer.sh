@@ -23,7 +23,7 @@ fi
     #python3 /neousys/at_init.py
     igt20 led1 1
 # set Auto Reconnect = off in wvdial.conf    
-    wvdial
+    wvdial $2
     echo "igt-dialer: wait for redial"
     igt20 led1 0
     sleep 10
