@@ -11,7 +11,10 @@ fi
     [ -e $1 ] && break
     sleep 1
   done
-  [ $i = 30 ] && ( echo "igt-dialer: modem not found" ; exit 2 )
+  if [ $i = 30 ]; then
+    echo "igt-dialer: modem not found"
+    exit 2
+  fi
 
   while [ 1 ];
   do
