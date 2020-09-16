@@ -15,8 +15,16 @@
 
 const unsigned int g_iDiGpioPin[MAX_DI_NUM]={26,27,23,61};
 const unsigned int g_iDoGpioPin[MAX_DO_NUM]={44,45,46,47};
-const unsigned int g_iBtnGpioPin[MAX_BTN_NUM]={68,67};
+const unsigned int g_iBtnGpioPin_20[MAX_BTN_NUM]={68,67};
 const unsigned int g_iDoEnable=65;
+
+/* todo: add IGT-33*/
+//const unsigned int g_iDiGpioPin[MAX_DI_NUM]={26,27,23,61};
+//const unsigned int g_iDoGpioPin[MAX_DO_NUM]={44,45,46,47};
+const unsigned int g_iBtnGpioPin_33[MAX_BTN_NUM]={72,73};
+//const unsigned int g_iDoEnable=65;
+
+const unsigned int *g_pBtnGpioPin = g_iBtnGpioPin_33;
 
 int di_read(unsigned int line, unsigned int *value)
 {
@@ -87,14 +95,15 @@ int btn_read(unsigned int line, unsigned int *value)
         char buf[MAX_BUF];
         char ch;
 
-        snprintf(buf, sizeof(buf), SYSFS_BTN_DIR "/gpio%d/value",  g_iBtnGpioPin[line]);
- 
+//        snprintf(buf, sizeof(buf), SYSFS_BTN_DIR "/gpio%d/value",  g_iBtnGpioPin[line]);
+        snprintf(buf, sizeof(buf), SYSFS_BTN_DIR "/gpio%d/value",  *(g_pBtnGpioPin+line));
+
         fd = open(buf, O_RDONLY);
         if (fd < 0) {
-			perror("btn_read");
-			return fd;
+                        perror("btn_read");
+                        return fd;
         }
- 
+
         read(fd, &ch, 1);
 
         if (ch == '0') {
@@ -102,10 +111,11 @@ int btn_read(unsigned int line, unsigned int *value)
         } else {
                 *value = 1;
         }
- 
+
         close(fd);
         return 0;
 }
+
 
 int led(unsigned int line, unsigned int value)
 {
