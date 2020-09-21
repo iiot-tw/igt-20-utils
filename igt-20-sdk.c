@@ -21,7 +21,6 @@
   #define SYSFS_LED_DIR "/sys/class/leds/igt20::"
   #define MAX_DI_NUM	4
   #define MAX_DO_NUM	4
-  #define DO_EN_VAL		0
 //IGT-20/IGT-21
 const unsigned int g_iDiGpioPin[MAX_DI_NUM]={26,27,23,61};
 const unsigned int g_iDoGpioPin[MAX_DO_NUM]={44,45,46,47};
@@ -32,12 +31,10 @@ const unsigned int g_iDoEnGpioPin=65;
   #define SYSFS_LED_DIR "/sys/class/leds/igt22::"
   #define MAX_DI_NUM	8
   #define MAX_DO_NUM	8
-  #define DO_EN_VAL		1
 const unsigned int g_iDiGpioPin[MAX_DI_NUM]={116,20,115,114,51,52,49,50};
 const unsigned int g_iDoGpioPin[MAX_DO_NUM]={111,110,112,113,117,104,7,103};
 const unsigned int g_iBtnGpioPin[MAX_BTN_NUM]={4,5};
 const unsigned int g_iDoEnGpioPin=48;
-const unsigned int g_iDoEn=1;
 #else
   #error Unsupported model or model not defined
 #endif
