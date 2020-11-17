@@ -1,3 +1,6 @@
+// compile with igt library included
+// gcc igt-34_read_curr.c -ligt -o igt-34_read_curr
+
 #include <stdint.h>
 #include <stdio.h>
 #include <igt.h>
