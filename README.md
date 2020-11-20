@@ -6,3 +6,4 @@
 * wvdial.conf: wvdial configuration file for various LTE modules <br />
 * igt-33_read_volt.c: sample code of reading voltage input on IGT-33V <br />
 * igt-34_read_curr.c: sample code of reading current input on IGT-34C <br />
+* wifiConfig.sh: script to setup wifi assume that wifi driver has been loaded <br />
