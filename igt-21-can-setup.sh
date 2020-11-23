@@ -1,5 +1,5 @@
 if [ "x$1" == "x" ]; then
-  echo "Usage: $0 {bitRate}
+  echo "Usage: $0 {bitRate}"
   exit 1
 fi
 
