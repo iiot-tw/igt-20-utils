@@ -1,3 +1,12 @@
+# This script is created as an EXAMPLE for specific purpose on Neousys IGT series.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
+# NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
+# NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. THE AUTHORS SHALL NOT, UNDER ANY
+# CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+# DAMAGES, FOR ANY REASON WHATSOEVER.
+#
 #!/bin/bash
 
 run_libcomposite () { 
@@ -45,7 +54,8 @@ run_libcomposite () {
 			echo "%SystemRoot%\\system32\\shell32.dll,-233"	> functions/rndis.usb0/os_desc/interface.rndis/Icons/data 
 			mkdir -p functions/rndis.usb0/os_desc/interface.rndis/Label
 			echo 1 > functions/rndis.usb0/os_desc/interface.rndis/Label/type 
-			echo "BeagleBone USB Ethernet" > functions/rndis.usb0/os_desc/interface.rndis/Label/data 
+			echo "IGT USB Ethernet" > functions/rndis.usb0/os_desc/interface.rndis/Label/data 
+			#echo "Beaglebone USB Ethernet" > functions/rndis.usb0/os_desc/interface.rndis/Label/data 
 			ln -s functions/rndis.usb0 configs/c.1/
 			usb0="enable"
 		fi
