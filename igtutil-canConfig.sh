@@ -1,3 +1,4 @@
+#!/bin/bash
 # This script is created as an EXAMPLE for specific purpose on Neousys IGT series.
 #
 # THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
