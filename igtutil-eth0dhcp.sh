@@ -1,3 +1,4 @@
+#!/bin/bash
 # This script is created as an EXAMPLE for specific purpose on Neousys IGT series.
 #
 # It works only when eth0 is configured in /etc/network/interfaces
