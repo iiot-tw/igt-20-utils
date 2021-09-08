@@ -31,7 +31,14 @@ device=$1
 speed=$2
 message=$3
 
+if [ "x$message" = "xechoback" ]; then
+  echo "Running in Echoback server mode:"
+  echo "device: $device"
+  echo "speed:  $speed"
+fi
+
 dumpFile=/dev/shm/ttydump
+
 stty -F $device $speed raw -echo -crtscts
 
 exec 3<$device
@@ -41,25 +48,36 @@ count=0;
 
 while $run;
 do
-  cat <&3 > $dumpFile &
-  PID=$!
-  echo "Message sent: $message"
-  echo $message > $device
-  sleep 0.2s
-  kill $PID
-  wait $PID 2>/dev/null
-
-  response=$(<$dumpFile)
-  echo "Response rcv: $response"
-
-  count=$((count+1));
-
-  if [ "x$message" != "x$response" ]; then
-    echo "$count: FAILED!!"
-    run=false;
+  if [ "$message" = "echoback" ]; then
+    read x < $device
+    sleep 0.1s
+    echo $x
+    if [ "$x" = "echostop" ]; then
+      run=false
+      x="server stop"
+    fi
+    echo $x > $device
   else
-    echo "$count: PASSED!!"
-    run=false;  #remark this line to enable an infinite test
+    cat <&3 > $dumpFile &
+    PID=$!
+    echo "Message sent: $message"
+    echo $message > $device
+    sleep 0.2s
+    kill $PID
+    wait $PID 2>/dev/null
+
+    response=$(<$dumpFile)
+    echo "Response rcv: $response"
+
+    count=$((count+1));
+
+    if [ "x$message" != "x$response" ]; then
+      echo "$count: FAILED!!"
+      run=false;
+    else
+      echo "$count: PASSED!!"
+      run=false;  #remark this line to enable an infinite test
+    fi
   fi
 done
 
