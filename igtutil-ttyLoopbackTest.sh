@@ -48,10 +48,11 @@ count=0;
 
 while $run;
 do
+  count=$((count+1));
   if [ "$message" = "echoback" ]; then
     read x < $device
     sleep 0.1s
-    echo $x
+    echo $count: $x
     if [ "$x" = "echostop" ]; then
       run=false
       x="server stop"
@@ -68,8 +69,6 @@ do
 
     response=$(<$dumpFile)
     echo "Response rcv: $response"
-
-    count=$((count+1));
 
     if [ "x$message" != "x$response" ]; then
       echo "$count: FAILED!!"
