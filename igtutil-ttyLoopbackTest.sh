@@ -9,6 +9,12 @@
 #
 #!/bin/bash
 
+function finish() {
+  run=false
+}
+
+trap finish SIGINT
+
 if [ "x$1" != "x/dev/ttyS2" ]; then
   echo "Usage: $0 /dev/ttyS2 115200 <string_to_send>"
   echo "Please specify correct device."
@@ -50,14 +56,17 @@ while $run;
 do
   count=$((count+1));
   if [ "$message" = "echoback" ]; then
-    read x < $device
-    sleep 0.1s
-    echo $count: $x
+    read -t1 x < $device
+    #sleep 0.1s
     if [ "$x" = "echostop" ]; then
       run=false
       x="server stop"
     fi
-    echo $x > $device
+
+    if [ "x$x" != "x" ]; then
+      echo $count: $x
+      echo $x > $device
+    fi
   else
     cat <&3 > $dumpFile &
     PID=$!
