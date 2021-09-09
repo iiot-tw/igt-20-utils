@@ -37,55 +37,60 @@ device=$1
 speed=$2
 message=$3
 
-if [ "x$message" = "xechoback" ]; then
-  echo "Running in Echoback server mode:"
-  echo "device: $device"
-  echo "speed:  $speed"
-fi
-
 dumpFile=/dev/shm/ttydump
 
-stty -F $device $speed raw -echo -crtscts
+stty -F $device $speed raw -echo
 
 exec 3<$device
 
 run=true;
-count=0;
+count=1;
+
+if [ "x$message" = "xechoback" ]; then
+  echo "Running in Echoback server mode:"
+  echo "device: $device"
+  echo "speed:  $speed"
+else
+  echo "Message sent: $message"
+  echo $message > $device
+  sleep 0.1s
+fi
+
 
 while $run;
 do
-  count=$((count+1));
-  if [ "$message" = "echoback" ]; then
-    read -t1 x < $device
-    #sleep 0.1s
-    if [ "$x" = "echostop" ]; then
-      run=false
-      x="server stop"
+  read -t1 response <&3 #$device
+  if [ "x$response" = "x" ]; then
+    timeout=$((timeout+1))
+    echo -n .
+    if [ $timeout -gt 10 ]; then
+       run=false
     fi
-
-    if [ "x$x" != "x" ]; then
-      echo $count: $x
-      echo $x > $device
-    fi
+  elif [ "x$response" = "xechostop" ]; then
+    echo "server stop"
+    echo "server stop" > $device
+    run=false
+  elif [ "x$message" = "xechoback" ]; then
+    echo $count: $response
+    echo $response > $device
+    count=$((count+1));
   else
-    cat <&3 > $dumpFile &
-    PID=$!
-    echo "Message sent: $message"
-    echo $message > $device
-    sleep 0.2s
-    kill $PID
-    wait $PID 2>/dev/null
-
-    response=$(<$dumpFile)
-    echo "Response rcv: $response"
-
-    if [ "x$message" != "x$response" ]; then
+    timeout=0
+    echo "Message recv: $response"
+    if [ "x$message" = "x$response" ]; then
+      echo "$count: PASSED!!"
+      #run=false;  #remark this line to enable an infinite test
+    else
       echo "$count: FAILED!!"
       run=false;
-    else
-      echo "$count: PASSED!!"
-      run=false;  #remark this line to enable an infinite test
     fi
+  fi
+
+  if [ $run = true ] && [ "x$response" != "x" ]; then
+    count=$((count+1));
+    message=$count
+    echo "Message sent: $message"
+    echo $message > $device
   fi
 done
 
