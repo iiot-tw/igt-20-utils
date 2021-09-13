@@ -82,21 +82,23 @@ do
   if [ $atcmd = true ]; then
     echo "READ AT Command RESPONSE"
     read -t1 response <&3 #$device
-    run=false
   fi
 
   count=$((count+1))
   if [ $server = true ]; then
       echo "$count: echoback"
-	  if [ "x$response" = "xechostop" ]; then
+    if [ "x$response" = "xechostop" ]; then
       message="server stop"
       run=false
     else
       message=$response
-	  fi
-    echo "Message recv: $response"	
+    fi
+    echo "Message recv: $response"
+  elif [ $atcmd = true ]; then
+    echo "Message recv: $response"
+    run=false    
   else
-    echo "Message recv: $response"	
+    echo "Message recv: $response"
     if [ "x$response" = "x$message" ]; then
       echo "$count: PASSED!!"
       run=false;  #remark this line to enable an infinite test
