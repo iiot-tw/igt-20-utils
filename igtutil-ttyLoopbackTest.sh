@@ -47,8 +47,10 @@ run=true
 count=1
 timeout=0
 atcmd=false
+server=false
 
 if [ "x$message" = "xechoback" ]; then
+  server=true
   echo "Running in Echoback server mode:"
   echo "device: $device"
   echo "speed:  $speed"
@@ -71,42 +73,41 @@ do
   if [ "x$response" = "x" ]; then
     timeout=$((timeout+1))
     echo -n .
-    if [ $timeout -gt 10 ]; then
+    if [ $timeout -gt 10 ] && [ $server = false ]; then
        run=false
     fi
-  elif [ "x$response" = "xechostop" ]; then
-    echo "server stop"
-    echo "server stop" > $device
+    continue
+  fi
+  
+  if [ $atcmd = true ]; then
+    echo "READ AT Command RESPONSE"
+    read -t1 response <&3 #$device
     run=false
-  elif [ "x$message" = "xechoback" ]; then
-    echo $count: $response
-    echo $response > $device
-
-    count=$((count+1));
-  else
-    timeout=0
-    if [ $atcmd = true ]; then
-      echo "READ AT Command RESPONSE"
-      read -t1 response <&3 #$device
-    fi
-
-    echo "Message recv: $response"
-    if [ $atcmd = false ]; then
-      if [ "x$message" = "x$response" ]; then
-        echo "$count: PASSED!!"
-        #run=false;  #remark this line to enable an infinite test
-      else
-        echo "$count: FAILED!!"
-        run=false;
-      fi
-    else
-      run=false;
-    fi
   fi
 
-  if [ $run = true ] && [ "x$response" != "x" ]; then
-    count=$((count+1));
+  count=$((count+1))
+  if [ $server = true ]; then
+      echo "$count: echoback"
+	  if [ "x$response" = "xechostop" ]; then
+      message="server stop"
+      run=false
+    else
+      message=$response
+	  fi
+    echo "Message recv: $response"	
+  else
+    echo "Message recv: $response"	
+    if [ "x$response" = "x$message" ]; then
+      echo "$count: PASSED!!"
+      run=false;  #remark this line to enable an infinite test
+    else
+      echo "$count: FAILED!!"
+      run=false;
+    fi
     message=$count
+  fi
+
+  if [ $run = true ]; then
     echo "Message sent: $message"
     echo $message > $device
   fi
