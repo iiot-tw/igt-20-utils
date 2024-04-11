@@ -1,5 +1,14 @@
-// compile with igt library included
-// gcc igt-34_read_curr.c -ligt -o igt-34_read_curr
+/* This script is created as an EXAMPLE for specific purpose on Neousys IGT series.
+
+   THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
+   NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
+   NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. THE AUTHORS SHALL NOT, UNDER ANY
+   CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+   DAMAGES, FOR ANY REASON WHATSOEVER.
+
+built with: gcc igt-34_read_curr.c -ligt -o igt-34_read_curr
+*/
 
 #include <stdint.h>
 #include <stdio.h>
